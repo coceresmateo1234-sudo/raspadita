@@ -1,378 +1,1174 @@
-* { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; }
-body { background: #17051f; display: flex; justify-content: center; }
 
-/* La escena conserva exactamente las proporciones de la imagen original. */
-.juego { position: relative; width: min(100%, 650px); margin: 0 auto; }
-.escena {
+/* =====================================
+   COMUNIDAD MISTY
+   RASPADITA HALLOWEEN - 9 CALDEROS
+   HTML + CSS
+===================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #17051f;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.juego {
   position: relative;
-  width: 100%;
-  aspect-ratio: 1051 / 1496;
-  background: url("RaspaditaM.png") center / 100% 100% no-repeat;
+  width: min(100%, 650px);
+  margin: auto;
 }
 
-/* ==========================
-   TITULO HALLOWEEN
-========================== */
-
-.titulo-halloween {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 94%;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.titulo-halloween img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  animation: brilloTitulo 3s ease-in-out infinite;
-}
-
-@keyframes brilloTitulo {
-  0%, 100% {
-    filter: drop-shadow(0 0 5px #ff00c8);
-  }
-
-  50% {
-    filter: drop-shadow(0 0 18px #ff52dd);
-  }
-}
-
-/* ==========================
-   ELECCIONES OCULTAS
-========================== */
-
-.eleccion,
-.cerrar-control {
+.control {
   position: absolute;
   width: 1px;
   height: 1px;
   opacity: 0;
+  pointer-events: none;
 }
 
-/* ==========================
-   POSICIONES DE OLLITAS
-========================== */
+/* =====================================
+   BIENVENIDA
+===================================== */
+
+.bienvenida {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  background: #180522;
+  transition: opacity .7s, visibility .7s;
+}
+
+.bienvenida-fondo {
+  position: relative;
+  width: min(100vw, 650px);
+  aspect-ratio: 1051 / 1496;
+  flex-shrink: 0;
+  background: url("Inicio.png")
+    center / 100% 100% no-repeat;
+}
+
+/* Cubre la frase antigua de 6 calderos */
+.frase-nueva {
+  position: absolute;
+  left: 17%;
+  top: 65%;
+  width: 66%;
+  min-height: 9%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 1px solid #ff8fe9;
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg, #310a42, #5b115e
+  );
+  color: #ffd6f6;
+  text-align: center;
+  font-size: clamp(11px, 2.7vw, 18px);
+  line-height: 1.4;
+  text-shadow: 0 0 8px #f93dcf;
+  box-shadow: 0 0 15px #ff28c4;
+}
+
+.frase-nueva strong {
+  color: #ffe88e;
+}
+
+/* Zona sobre el botón dibujado */
+.zona-iniciar {
+  position: absolute;
+  left: 20%;
+  top: 76%;
+  width: 60%;
+  height: 11%;
+  z-index: 3;
+  cursor: pointer;
+  border-radius: 45px;
+  -webkit-tap-highlight-color: transparent;
+  animation: pulsoInicio 2s infinite;
+}
+
+@keyframes pulsoInicio {
+  0%, 100% {
+    box-shadow: 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 22px #ff41d9;
+  }
+}
+
+#iniciar:checked ~ .bienvenida {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* =====================================
+   FONDO PRINCIPAL
+===================================== */
+
+.escena {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1051 / 1496;
+  background: url("RaspaditaM.png")
+    center / 100% 100% no-repeat;
+  overflow: hidden;
+}
+
+/* =====================================
+   TITULO DECORATIVO ORIGINAL
+===================================== */
+
+.titulo {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  width: 93%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.titulo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 8px #ff3acb);
+  animation: brilloTitulo 3s infinite;
+}
+
+@keyframes brilloTitulo {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px #ff3acb);
+  }
+  50% {
+    filter: drop-shadow(0 0 16px #ff84eb);
+  }
+}
+
+.instruccion-principal {
+  position: absolute;
+  top: 95.5%;
+  left: 50%;
+  width: 84%;
+  margin: 0;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 5px 7px;
+  border-radius: 20px;
+  background: rgba(35, 4, 46, .8);
+  text-align: center;
+  color: #ffe68b;
+  font-size: clamp(11px, 2.8vw, 18px);
+  font-weight: 900;
+  text-shadow: 0 0 8px #ff4edb;
+  pointer-events: none;
+}
+
+/* =====================================
+   POSICIONES DE LOS 9 CALDEROS
+   ADAPTADAS AL FONDO 1051 x 1496
+===================================== */
 
 .casilla {
   position: absolute;
-  width: 30.5%;
-  height: 29%;
-
-  display: grid;
-  place-items: center;
+  width: 29%;
+  height: 16.5%;
+  z-index: 10;
 }
 
-/* FILA SUPERIOR */
+/* PRIMERA FILA */
+.casilla1 { left: 5.2%;  top: 43.5%; }
+.casilla2 { left: 35.5%; top: 43.5%; }
+.casilla3 { left: 65.8%; top: 43.5%; }
 
-.casilla1 {
-  left: 5%;
-  top: 42.3%;
-}
+/* SEGUNDA FILA */
+.casilla4 { left: 5.2%;  top: 58.8%; }
+.casilla5 { left: 35.5%; top: 58.8%; }
+.casilla6 { left: 65.8%; top: 58.8%; }
 
-.casilla2 {
-  left: 35.7%;
-  top: 42.3%;
-}
+/* TERCERA FILA */
+.casilla7 { left: 5.2%;  top: 74.1%; }
+.casilla8 { left: 35.5%; top: 74.1%; }
+.casilla9 { left: 65.8%; top: 74.1%; }
 
-.casilla3 {
-  left: 66.5%;
-  top: 42.3%;
-}
-
-/* FILA INFERIOR */
-
-.casilla4 {
-  left: 4.5%;
-  top: 60.3%;
-}
-
-.casilla5 {
-  left: 35.5%;
-  top: 60.3%;
-}
-
-.casilla6 {
-  left: 66.5%;
-  top: 60.3%;
-}
-
-/* ==========================
-   PREMIOS BAJO LAS OLLITAS
-========================== */
-
-.premio {
-  position: absolute;
-  z-index: 1;
-
-  display: grid;
-  place-items: center;
-
-  width: 83%;
-  height: 65%;
-  padding: 4%;
-
-  border-radius: 40%;
-
-  color: #ffe864;
-  background: radial-gradient(
-    ellipse,
-    #650777,
-    #24052d 75%
-  );
-
-  border: 2px solid #ff69ef;
-
-  font: 900 clamp(13px, 4.7vw, 34px)/1.1 Arial, sans-serif;
-
-  text-shadow:
-    0 2px 3px #000,
-    0 0 9px #ff29b6;
-
-  text-align: center;
-
-  opacity: 0;
-  transform: scale(.65);
-
-  transition:
-    opacity .4s,
-    transform .4s;
-}
-
-.premio-chico {
-  font-size: clamp(10px, 3vw, 23px);
-}
-
-/* ==========================
-   CALDEROS
-========================== */
+/* =====================================
+   IMAGEN DEL CALDERO
+===================================== */
 
 .caldero {
   position: absolute;
   inset: 0;
-  z-index: 2;
-
+  z-index: 3;
   display: grid;
   place-items: center;
-
   cursor: pointer;
-
-  transition:
-    opacity .45s,
-    transform .45s,
-    filter .3s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transform-origin: center;
 }
 
 .caldero img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
   pointer-events: none;
+  filter: drop-shadow(0 0 7px #ff29cd);
 }
 
-.caldero:hover {
-  filter: drop-shadow(0 0 10px #ff8ff2);
-  transform: scale(1.045);
+.caldero:hover img {
+  filter: drop-shadow(0 0 15px #ffb4ed);
 }
 
-/* BLOQUEAR LAS DEMAS OLLITAS */
-
-.juego:has(.eleccion:checked) .caldero {
+.chispa {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  opacity: 0;
+  font-size: clamp(22px, 6vw, 40px);
+  transform: translate(-50%, -50%) scale(.3);
   pointer-events: none;
 }
 
-/* DESAPARECER CALDERO ELEGIDO */
+/* =====================================
+   RECOMPENSA ESCONDIDA
+===================================== */
 
-.juego:has(#pick1:checked) .casilla1 .caldero,
-.juego:has(#pick2:checked) .casilla2 .caldero,
-.juego:has(#pick3:checked) .casilla3 .caldero,
-.juego:has(#pick4:checked) .casilla4 .caldero,
-.juego:has(#pick5:checked) .casilla5 .caldero,
-.juego:has(#pick6:checked) .casilla6 .caldero {
+.recompensa {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 52%;
+  width: 92%;
+  height: 67%;
+  padding: 5px 2px;
+  transform: translate(-50%, -50%) scale(.65);
   opacity: 0;
-  transform: translateY(-15%) scale(.75);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+
+  border: 2px solid #ffd96b;
+  border-radius: 24px;
+  background: radial-gradient(
+    ellipse,
+    #7e207e 0%,
+    #390948 65%,
+    #18031f 100%
+  );
+
+  box-shadow:
+    0 0 16px #ff2bc7,
+    0 0 26px rgba(255, 210, 70, .5);
+  text-align: center;
+  pointer-events: none;
 }
 
-/* REVELAR PREMIO */
-
-.juego:has(#pick1:checked) .casilla1 .premio,
-.juego:has(#pick2:checked) .casilla2 .premio,
-.juego:has(#pick3:checked) .casilla3 .premio,
-.juego:has(#pick4:checked) .casilla4 .premio,
-.juego:has(#pick5:checked) .casilla5 .premio,
-.juego:has(#pick6:checked) .casilla6 .premio {
-  opacity: 1;
-  transform: scale(1);
+.recompensa strong {
+  color: #ffe37b;
+  font-size: clamp(22px, 6vw, 43px);
+  line-height: 1.1;
+  font-weight: 1000;
+  text-shadow:
+    2px 3px 3px #000,
+    0 0 13px #ff9900;
 }
 
-/* ==========================
-   PANTALLA GANADORA
-========================== */
+.recompensa small {
+  color: #fff;
+  font-size: clamp(9px, 2.2vw, 15px);
+  font-weight: 900;
+  text-shadow: 1px 2px 3px #000;
+}
 
-.pantalla-ganadora {
+/* =====================================
+   CALDEROS SELECCIONADOS
+===================================== */
+
+#c1:checked ~ .escena .casilla1 .caldero,
+#c2:checked ~ .escena .casilla2 .caldero,
+#c3:checked ~ .escena .casilla3 .caldero,
+#c4:checked ~ .escena .casilla4 .caldero,
+#c5:checked ~ .escena .casilla5 .caldero,
+#c6:checked ~ .escena .casilla6 .caldero,
+#c7:checked ~ .escena .casilla7 .caldero,
+#c8:checked ~ .escena .casilla8 .caldero,
+#c9:checked ~ .escena .casilla9 .caldero {
+  animation: desaparecer .75s forwards;
+  pointer-events: none;
+}
+
+#c1:checked ~ .escena .casilla1 .recompensa,
+#c2:checked ~ .escena .casilla2 .recompensa,
+#c3:checked ~ .escena .casilla3 .recompensa,
+#c4:checked ~ .escena .casilla4 .recompensa,
+#c5:checked ~ .escena .casilla5 .recompensa,
+#c6:checked ~ .escena .casilla6 .recompensa,
+#c7:checked ~ .escena .casilla7 .recompensa,
+#c8:checked ~ .escena .casilla8 .recompensa,
+#c9:checked ~ .escena .casilla9 .recompensa {
+  animation: mostrarPremio .65s .45s both;
+}
+
+#c1:checked ~ .escena .casilla1 .chispa,
+#c2:checked ~ .escena .casilla2 .chispa,
+#c3:checked ~ .escena .casilla3 .chispa,
+#c4:checked ~ .escena .casilla4 .chispa,
+#c5:checked ~ .escena .casilla5 .chispa,
+#c6:checked ~ .escena .casilla6 .chispa,
+#c7:checked ~ .escena .casilla7 .chispa,
+#c8:checked ~ .escena .casilla8 .chispa,
+#c9:checked ~ .escena .casilla9 .chispa {
+  animation: explosionMagica .65s forwards;
+}
+
+@keyframes desaparecer {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.08) rotate(-5deg);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(.1) rotate(25deg);
+  }
+}
+
+@keyframes mostrarPremio {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.3);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes explosionMagica {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.2);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(3);
+  }
+}
+
+/* =====================================
+   PANEL INFERIOR
+   SIN MOSTRAR LOS PREMIOS
+===================================== */
+
+.pie-juego {
+  padding: 19px 15px 25px;
+  background: linear-gradient(#3a0b4a, #17051f);
+  text-align: center;
+  border-top: 2px solid #e948d4;
+}
+
+.boton-reglas {
+  display: inline-block;
+  padding: 14px 27px;
+  border: 2px solid #ffd77a;
+  border-radius: 40px;
+  background: linear-gradient(
+    135deg, #ff5bdf, #9811af
+  );
+  box-shadow: 0 0 15px #ff38cf;
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.pie-juego p {
+  margin: 20px 0 0;
+  color: #f8c2ed;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+/* =====================================
+   VENTANA DE REGLAS
+===================================== */
+
+.pantalla-reglas {
   position: fixed;
   inset: 0;
-  z-index: 100;
-
+  z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 12px;
-
-  background: rgba(0, 0, 0, .85);
-  backdrop-filter: blur(7px);
-
+  padding: 15px;
+  background: rgba(12, 0, 19, .9);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-
-  transition: opacity .4s, visibility .4s;
+  transition: opacity .3s, visibility .3s;
 }
 
-/* MOSTRAR PANTALLA AL ELEGIR */
-
-.juego:has(.eleccion:checked)
-.pantalla-ganadora {
+#reglas:checked ~ .pantalla-reglas {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-/* CERRAR PANTALLA AL GUARDAR */
-
-.juego:has(#cerrar-premio:checked)
-.pantalla-ganadora {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+.cartel-reglas {
+  width: min(100%, 430px);
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: 25px 22px;
+  border: 2px solid #ff87e9;
+  border-radius: 25px;
+  background: linear-gradient(
+    145deg, #6b237e, #22082f
+  );
+  box-shadow: 0 0 30px #f43cda;
+  text-align: center;
 }
 
-/* ==========================
-   IMAGEN DE MISTY
-========================== */
+.cartel-reglas h2 {
+  margin: 0 0 15px;
+  color: #ffe27c;
+}
+
+.cartel-reglas p {
+  line-height: 1.5;
+}
+
+.cartel-reglas ol {
+  padding-left: 23px;
+  margin: 20px 0;
+  text-align: left;
+  line-height: 1.8;
+}
+
+.cartel-reglas li {
+  margin-bottom: 7px;
+}
+
+.nota {
+  color: #ffd28a;
+  font-size: 12px;
+}
+
+.cerrar-reglas {
+  display: block;
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 30px;
+  background: linear-gradient(
+    135deg, #ff61df, #9d18bb
+  );
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* =====================================
+   PANTALLA GANADORA
+   PREPARADA PARA JAVASCRIPT
+===================================== */
+
+.pantalla-ganadora {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(12, 0, 20, .9);
+}
 
 .cartel-ganador {
   position: relative;
-  width: min(96vw, 460px);
-  max-height: 95vh;
-  max-height: 95dvh;
-  aspect-ratio: 1269 / 1190;
-  animation: aparecerPremio .5s ease-out;
+  width: min(96vw, 470px);
+  aspect-ratio: 1278 / 1230;
 }
 
-.cartel-ganador > img {
+.cartel-ganador img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-@keyframes aparecerPremio {
-  from {
-    opacity: 0;
-    transform: scale(.75);
+.premio-final {
+  position: absolute;
+  top: 65%;
+  left: 13%;
+  width: 74%;
+  height: 10%;
+  display: grid;
+  place-items: center;
+  color: #9d087b;
+  font-size: clamp(25px, 7vw, 44px);
+  font-weight: 1000;
+  text-shadow: 0 2px 4px #ffd2fa;
+}
+
+.zona-guardar {
+  position: absolute;
+  top: 81%;
+  left: 11%;
+  width: 78%;
+  height: 13%;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 400px) {
+  .recompensa {
+    border-width: 1px;
+    border-radius: 13px;
   }
 
-  to {
-    opacity: 1;
-    transform: scale(1);
+  .recompensa strong {
+    font-size: 5.7vw;
+  }
+
+  .recompensa small {
+    font-size: 2.1vw;
+  }
+
+  .frase-nueva {
+    border-radius: 12px;
   }
 }
 
-/* ==========================
-   TEXTO VARIABLE DEL PREMIO
-========================== */
+@media (prefers-reduced-motion: reduce) {
+  .titulo img,
+  .zona-iniciar {
+    animation: none;
+  }
 
-.premio-ganador {
+  .caldero,
+  .recompensa,
+  .chispa {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+  }
+}
+
+/* ========================================
+   COMUNIDAD MISTY
+   VICTORIA AUTOMÁTICA SIN JAVASCRIPT
+======================================== */
+
+/* Primero ocultamos los tres resultados */
+.premio-final span {
+  display: none;
+}
+
+/* ========================================
+   DETECTAR 3 IGUALES
+======================================== */
+
+/* 10%: CALDEROS 1, 5 Y 9 */
+.juego:has(#c1:checked):has(#c5:checked):has(#c9:checked)
+.pantalla-ganadora {
+  display: flex;
+}
+
+.juego:has(#c1:checked):has(#c5:checked):has(#c9:checked)
+.ganancia10 {
+  display: block;
+}
+
+/* 25%: CALDEROS 2, 6 Y 7 */
+.juego:has(#c2:checked):has(#c6:checked):has(#c7:checked)
+.pantalla-ganadora {
+  display: flex;
+}
+
+.juego:has(#c2:checked):has(#c6:checked):has(#c7:checked)
+.ganancia25 {
+  display: block;
+}
+
+/* 1000 FICHAS: CALDEROS 3, 4 Y 8 */
+.juego:has(#c3:checked):has(#c4:checked):has(#c8:checked)
+.pantalla-ganadora {
+  display: flex;
+}
+
+.juego:has(#c3:checked):has(#c4:checked):has(#c8:checked)
+.ganancia1000 {
+  display: block;
+}
+
+/* ========================================
+   BLOQUEAR CALDEROS AL GANAR
+======================================== */
+
+/* En cuanto exista cualquier trío ganador,
+   ningún otro caldero podrá abrirse. */
+
+.juego:is(
+  :has(#c1:checked):has(#c5:checked):has(#c9:checked),
+  :has(#c2:checked):has(#c6:checked):has(#c7:checked),
+  :has(#c3:checked):has(#c4:checked):has(#c8:checked)
+) .caldero {
+  pointer-events: none !important;
+  cursor: default;
+}
+
+/* ========================================
+   ANIMACIÓN DE LA PANTALLA GANADORA
+======================================== */
+
+.cartel-ganador {
+  animation: entradaVictoria .7s ease-out both;
+}
+
+@keyframes entradaVictoria {
+  0% {
+    opacity: 0;
+    transform: scale(.6) translateY(40px);
+  }
+
+  65% {
+    opacity: 1;
+    transform: scale(1.06) translateY(-8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* TEXTO DEL PREMIO */
+.premio-final {
+  text-align: center;
+  color: #a00089;
+  font-weight: 1000;
+  text-shadow:
+    0 2px 4px #ffd2fa,
+    0 0 10px #ffb8e9;
+}
+
+/* ========================================
+   CERRAR PANTALLA CON EL BOTÓN VERDE
+======================================== */
+
+#cerrar-victoria:checked ~ .pantalla-ganadora {
+  display: none !important;
+}
+
+/* El juego permanece bloqueado
+   después de cerrar la victoria. */
+
+/* ======================================
+   RETRASO DE LA PANTALLA GANADORA
+   COMUNIDAD MISTY
+====================================== */
+
+/* La pantalla aparece 3 segundos
+   después de completar los 3 iguales */
+
+.juego:is(
+  :has(#c1:checked):has(#c5:checked):has(#c9:checked),
+  :has(#c2:checked):has(#c6:checked):has(#c7:checked),
+  :has(#c3:checked):has(#c4:checked):has(#c8:checked)
+) .pantalla-ganadora {
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: victoriaConEspera .7s 1.5s forwards;
+}
+
+@keyframes victoriaConEspera {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+/* PREMIOS SIN CUADRO VIOLETA */
+
+.recompensa {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Letras del premio con brillo */
+.recompensa strong {
+  color: #ffe37b;
+  text-shadow:
+    2px 3px 4px #000,
+    0 0 12px #ff9900;
+}
+
+.recompensa small {
+  color: #ffffff;
+  text-shadow:
+    2px 3px 4px #000,
+    0 0 8px #ff65d8;
+}
+
+/* REPRODUCTOR DE MUSICA */
+
+#musica-halloween {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 180px;
+  height: 40px;
+  z-index: 500;
+  border-radius: 30px;
+  box-shadow: 0 0 15px #ff40d6;
+}
+
+@media (max-width: 450px) {
+  #musica-halloween {
+    width: 145px;
+    height: 36px;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+/* ==================================
+   BOTÓN DE SONIDO - COMUNIDAD MISTY
+================================== */
+
+.boton-sonido {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 150;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    145deg,
+    #79218f,
+    #320740
+  );
+
+  border: 2px solid #ff8be9;
+  border-radius: 50%;
+
+  color: white;
+  font-size: 23px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 12px #ff39d1,
+    inset 0 0 9px #ff8be955;
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+}
+
+.boton-sonido:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 22px #ff39d1,
+    0 0 10px #ffb3f0;
+}
+
+.boton-sonido:active {
+  transform: scale(.94);
+}
+
+/* CELULARES */
+@media (max-width: 450px) {
+  .boton-sonido {
+    top: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+/* ====================================
+   WHATSAPP - COMUNIDAD MISTY
+==================================== */
+
+.seccion-whatsapp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 25px 15px 35px;
+  background: linear-gradient(
+    180deg,
+    #270733,
+    #13031c
+  );
+  text-align: center;
+}
+
+.seccion-whatsapp p {
+  margin: 0;
+  color: #ffd6f6;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.boton-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 75px;
+  height: 75px;
+  margin: 15px 0 5px;
+
+  background: #25d366;
+  color: white;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 15px #25d366,
+    0 0 30px #25d36666;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  transition:
+    transform .25s,
+    box-shadow .25s;
+}
+
+.boton-whatsapp svg {
+  width: 43px;
+  height: 43px;
+}
+
+.boton-whatsapp:hover {
+  transform: scale(1.12);
+  box-shadow:
+    0 0 25px #25d366,
+    0 0 45px #25d36699;
+}
+
+.boton-whatsapp:active {
+  transform: scale(.95);
+}
+
+.texto-whatsapp {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+/* ====================================
+   PANTALLA DE INTENTO UTILIZADO
+==================================== */
+
+.pantalla-intento {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background: rgba(17, 3, 26, .96);
+}
+
+.pantalla-intento.visible {
+  display: flex;
+}
+
+.cartel-intento {
+  width: min(100%, 420px);
+  padding: 35px 25px;
+
+  text-align: center;
+
+  background: linear-gradient(
+    145deg,
+    #69217e,
+    #260731
+  );
+
+  border: 3px solid #ff83e8;
+  border-radius: 25px;
+
+  box-shadow:
+    0 0 25px #ff3bd5,
+    inset 0 0 20px #a62c8b;
+}
+
+.icono-intento {
+  font-size: 65px;
+  margin-bottom: 15px;
+}
+
+.cartel-intento h2 {
+  color: #ffd6f6;
+  margin: 0 0 15px;
+}
+
+.cartel-intento h3 {
+  color: #ffe17d;
+  font-size: 28px;
+  margin: 0 0 20px;
+}
+
+.cartel-intento p {
+  color: white;
+  line-height: 1.6;
+}
+
+.contactar-misty {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 20px;
+
+  border-radius: 30px;
+  background: #25d366;
+  color: white;
+
+  font-weight: bold;
+  text-decoration: none;
+
+  box-shadow: 0 0 15px #25d36688;
+}
+
+/* =========================================
+   COMUNIDAD MISTY
+   CARTEL DE PREMIO ANTERIOR
+========================================= */
+
+/* Pantalla que cubre el juego */
+.pantalla-intento {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px;
+  background: rgba(15, 0, 25, 0.94);
+}
+
+.pantalla-intento.visible {
+  display: flex;
+}
+
+/* Contenedor de la imagen */
+.cartel-reclamar {
+  position: relative;
+  width: min(96vw, 480px);
+  max-height: 95dvh;
+  aspect-ratio: 1240 / 1190;
+}
+
+/* Imagen completa */
+.imagen-reclamar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Premio dentro del espacio blanco */
+.premio-reclamar {
   position: absolute;
 
-  left: 14%;
-  top: 65%;
-
-  width: 72%;
+  left: 17%;
+  top: 59%;
+  width: 66%;
   height: 12%;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   text-align: center;
   pointer-events: none;
 }
 
-.resultado {
-  display: none;
-
-  color: #d900a8;
-  font-family: Arial, sans-serif;
+#premio-anterior {
+  color: #a00086;
+  font-size: clamp(26px, 7vw, 46px);
   font-weight: 1000;
 
-  font-size: clamp(23px, 7vw, 46px);
-
-  line-height: 1;
-
-  -webkit-text-stroke: .5px #55005c;
-
   text-shadow:
-    2px 3px 0 #6b005c,
-    0 0 10px #ff9ae9;
+    0 2px 2px #ffffff,
+    0 0 8px #ff83d5;
 }
 
-/* PREMIO SEGUN LA OLLITA */
-
-.juego:has(#pick1:checked) .resultado1,
-.juego:has(#pick2:checked) .resultado2,
-.juego:has(#pick3:checked) .resultado3,
-.juego:has(#pick4:checked) .resultado4,
-.juego:has(#pick5:checked) .resultado5,
-.juego:has(#pick6:checked) .resultado6 {
-  display: block;
+#tipo-premio {
+  color: #6e1c74;
+  font-size: clamp(10px, 2.5vw, 15px);
+  font-weight: 900;
 }
 
-/* ==========================
-   BOTON ENTENDIDO Y GUARDAR
-========================== */
-
-.boton-guardar {
+/* Área invisible sobre el botón verde */
+.enlace-reclamar {
   position: absolute;
 
-  left: 12%;
-  top: 81%;
+  left: 10%;
+  top: 74%;
+  width: 80%;
+  height: 17%;
 
-  width: 76%;
-  height: 13%;
-
-  z-index: 5;
+  display: block;
+  border-radius: 40px;
   cursor: pointer;
-  border-radius: 50px;
 }
 
-.boton-guardar:hover {
-  filter: brightness(1.2);
+/* Efecto al pasar el mouse */
+.enlace-reclamar:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* ==========================
-   CELULARES
-========================== */
+.enlace-reclamar:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
 
-@media (max-width: 380px) {
-
-  .premio {
-    font-size: 5vw;
-    border-width: 1px;
+/* Ajustes para celulares */
+@media (max-width: 450px) {
+  #premio-anterior {
+    font-size: 8vw;
   }
 
-  .premio-chico {
-    font-size: 3vw;
+  #tipo-premio {
+    font-size: 2.6vw;
+  }
+}
+
+
+
+
+/* COMUNIDAD MISTY - VERSION CELULAR */
+
+@media screen and (max-width: 600px) {
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
   }
 
-  .resultado {
-    font-size: 6.5vw;
+  .juego {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .escena {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1051 / 1496;
+    background-size: 100% 100%;
+    overflow: hidden;
+  }
+
+  /* 9 CALDEROS EN 3 FILAS */
+
+  .casilla {
+    position: absolute;
+    width: 29%;
+    height: 16.5%;
+  }
+
+  .casilla1 { left: 5.2%; top: 43.5%; }
+  .casilla2 { left: 35.5%; top: 43.5%; }
+  .casilla3 { left: 65.8%; top: 43.5%; }
+
+  .casilla4 { left: 5.2%; top: 58.8%; }
+  .casilla5 { left: 35.5%; top: 58.8%; }
+  .casilla6 { left: 65.8%; top: 58.8%; }
+
+  .casilla7 { left: 5.2%; top: 74.1%; }
+  .casilla8 { left: 35.5%; top: 74.1%; }
+  .casilla9 { left: 65.8%; top: 74.1%; }
+
+  .caldero {
+    position: absolute;
+    inset: 0;
+  }
+
+  .caldero img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .titulo img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .bienvenida-fondo {
+    width: min(100vw, 650px);
+    aspect-ratio: 1051 / 1496;
   }
 }
