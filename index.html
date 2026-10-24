@@ -1,12 +1,15 @@
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
+<head> 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1b0629">
   <title>Raspadita Halloween | Comunidad Misty</title>
   <link rel="stylesheet" href="style.css">
+  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
 
@@ -261,80 +264,166 @@
 
 </div>
 
-<!-- PANTALLA DE INTENTO UTILIZADO -->
+
+<!-- PANTALLA DE PREMIO ANTERIOR -->
 <section id="intento-utilizado" class="pantalla-intento">
 
-  <div class="cartel-intento">
-    <div class="icono-intento">🐱🎃</div>
+  <div class="cartel-reclamar">
 
-    <h2>COMUNIDAD MISTY</h2>
+    <!-- IMAGEN DE MISTY -->
+    <img
+      src="Reclamar.png"
+      alt="Ya participaste. Tu premio fue de:"
+      class="imagen-reclamar"
+    >
 
-    <h3>¡YA PARTICIPASTE!</h3>
+    <!-- PREMIO SOBRE EL ESPACIO BLANCO -->
+    <div class="premio-reclamar">
+      <span id="premio-anterior">---</span>
+      <small id="tipo-premio"></small>
+    </div>
 
-    <p>
-      Ya utilizaste tu oportunidad en
-      la Raspadita de Halloween.
-    </p>
-
-    <p>
-      💜 ¡Gracias por jugar con Misty!
-    </p>
-
+    <!-- ZONA CLICABLE SOBRE EL BOTÓN VERDE -->
     <a
       href="https://wa.link/v2txxr"
       target="_blank"
       rel="noopener noreferrer"
-      class="contactar-misty"
-    >
-      💚 CONTACTAR POR WHATSAPP
-    </a>
+      class="enlace-reclamar"
+      aria-label="Reclamar mi premio por WhatsApp"
+    ></a>
+
   </div>
 
 </section>
 
+
 </main>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  const CLAVE = "comunidadMistyHalloween2026_intento";
+  const CLAVE_INTENTO =
+    "comunidadMistyHalloween2026_intento";
 
-  const pantalla = document.getElementById("intento-utilizado");
-  const iniciar = document.getElementById("iniciar");
+  const CLAVE_PREMIO =
+    "comunidadMistyHalloween2026_premio";
+
+  const pantalla =
+    document.getElementById("intento-utilizado");
+
+  const premioAnterior =
+    document.getElementById("premio-anterior");
+
+  const tipoPremio =
+    document.getElementById("tipo-premio");
 
   const calderos = Array.from(
     document.querySelectorAll(
-      '#c1, #c2, #c3, #c4, #c5, #c6, #c7, #c8, #c9'
+      "#c1, #c2, #c3, #c4, #c5, #c6, #c7, #c8, #c9"
     )
   );
 
-  function mostrarBloqueo() {
+  const grupos = [
+    {
+      premio: "10%",
+      ids: ["c1", "c5", "c9"]
+    },
+    {
+      premio: "25%",
+      ids: ["c2", "c6", "c7"]
+    },
+    {
+      premio: "1000 FICHAS",
+      ids: ["c3", "c4", "c8"]
+    }
+  ];
+
+  let partidaTerminada = false;
+
+  // Mostrar el premio anterior
+  function mostrarPremioAnterior() {
+
+    const premio =
+      localStorage.getItem(CLAVE_PREMIO);
+
     pantalla.classList.add("visible");
 
-    // Impide abrir más calderos
     calderos.forEach(caldero => {
       caldero.disabled = true;
     });
+
+    if (premio) {
+
+      premioAnterior.textContent = premio;
+
+      tipoPremio.textContent =
+        premio === "1000 FICHAS"
+          ? "FICHAS GANADAS"
+          : "DE BONIFICACIÓN";
+
+    } else {
+
+      premioAnterior.textContent =
+        "SIN RESULTADO";
+
+      tipoPremio.textContent =
+        "PARTIDA NO FINALIZADA";
+    }
   }
 
-  // Si ya jugó antes, no puede volver a entrar
-  if (localStorage.getItem(CLAVE) === "usado") {
-    mostrarBloqueo();
+  // Si ya jugó, bloquear desde el inicio
+  if (
+    localStorage.getItem(CLAVE_INTENTO) === "usado"
+  ) {
+    mostrarPremioAnterior();
     return;
   }
 
-  // El intento se consume al abrir el primer caldero.
-  // Así no se puede actualizar la página
-  // para empezar una partida nueva.
+  // Escuchar los calderos
   calderos.forEach(caldero => {
 
     caldero.addEventListener("change", () => {
 
-      if (caldero.checked &&
-          localStorage.getItem(CLAVE) !== "usado") {
+      if (partidaTerminada) return;
 
-        localStorage.setItem(CLAVE, "usado");
+      if (!caldero.checked) return;
 
+  
+
+      // Obtener calderos abiertos
+      const abiertos = new Set(
+        calderos
+          .filter(c => c.checked)
+          .map(c => c.id)
+      );
+
+      // Buscar el primer grupo completo
+      const ganador = grupos.find(grupo =>
+        grupo.ids.every(id => abiertos.has(id))
+      );
+
+      if (ganador) {
+
+        partidaTerminada = true;
+
+localStorage.setItem(CLAVE_INTENTO, "usado");
+
+        // Guardar premio definitivamente
+        localStorage.setItem(
+          CLAVE_PREMIO,
+          ganador.premio
+        );
+
+        // Bloquear calderos restantes
+        calderos.forEach(c => {
+          c.disabled = true;
+        });
+
+        console.log(
+          "Premio de Comunidad Misty:",
+          ganador.premio
+        );
       }
 
     });
@@ -343,6 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
+
 
 </body>
 </html>
