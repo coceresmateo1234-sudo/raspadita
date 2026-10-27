@@ -1,438 +1,482 @@
 
 <!DOCTYPE html>
 <html lang="es">
-<head> 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1b0629">
-  <title>Raspadita Halloween | Comunidad Misty</title>
-  <link rel="stylesheet" href="style.css">
-  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#1b0629">
+<title>Raspadita Halloween | Comunidad Misty</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-
-
-
-
 <main class="juego">
-    
-<!-- MÚSICA DE COMUNIDAD MISTY -->
-<audio id="musica-halloween" controls loop>
-  <source src="Musica.mp4" type="audio/mpeg">
+
+<!-- MUSICA -->
+<audio id="musica-halloween" loop preload="auto">
+  <source src="Musica.mp4" type="audio/mp4">
 </audio>
 
+<button id="boton-sonido" class="boton-sonido"
+  type="button" aria-label="Reproducir música">
+  <span id="icono-sonido">🔇</span>
+</button>
 
-  <!-- CONTROLES SIN JAVASCRIPT -->
-  <input type="checkbox" id="iniciar" class="control">
-  <input type="checkbox" id="reglas" class="control">
-
-<input
-  type="checkbox"
-  id="cerrar-victoria"
-  class="control"
->
-
-  <input type="checkbox" id="c1" class="control">
-  <input type="checkbox" id="c2" class="control">
-  <input type="checkbox" id="c3" class="control">
-  <input type="checkbox" id="c4" class="control">
-  <input type="checkbox" id="c5" class="control">
-  <input type="checkbox" id="c6" class="control">
-  <input type="checkbox" id="c7" class="control">
-  <input type="checkbox" id="c8" class="control">
-  <input type="checkbox" id="c9" class="control">
-
-  <!-- PANTALLA DE BIENVENIDA -->
-  <section class="bienvenida">
-    <div class="bienvenida-fondo">
-
-      <div class="frase-nueva">
-        Nueve calderos, tres premios mágicos...
-        <strong>¿Cuál será el tuyo?</strong>
-      </div>
-
-      <label for="iniciar"
-             class="zona-iniciar"
-             aria-label="Iniciar juego"></label>
+<!-- BIENVENIDA -->
+<section class="bienvenida" id="bienvenida">
+  <div class="bienvenida-fondo">
+    <div class="frase-nueva">
+      Nueve calderos, tres premios mágicos...
+      <strong>¿Cuál será el tuyo?</strong>
     </div>
-  </section>
+    <button id="iniciar" class="zona-iniciar"
+      type="button" aria-label="Iniciar juego"></button>
+  </div>
+</section>
 
-  <!-- PANTALLA PRINCIPAL -->
-  <section class="escena">
+<!-- JUEGO -->
+<section class="escena" id="escena">
 
-    <div class="titulo">
-      <img
-        src="TextoRaspaditaHalloween.png"
-        alt="Raspadita de Halloween">
+  <div class="titulo">
+    <img src="TextoRaspaditaHalloween.png"
+      alt="Raspadita Halloween">
+  </div>
+
+  <p class="instruccion-principal">
+    ✨ ¡Encontrá 3 premios iguales! ✨
+  </p>
+
+  <!-- FILA 1 -->
+
+  <div class="casilla casilla1" data-premio="10%">
+    <div class="recompensa">
+      <strong>10%</strong>
+      <small>BONIFICACIÓN</small>
     </div>
+    <button class="caldero" type="button" aria-label="Caldero 1">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
 
-    <p class="instruccion-principal">
-      ✨ ¡Encontrá 3 premios iguales! ✨
+  <div class="casilla casilla2" data-premio="25%">
+    <div class="recompensa">
+      <strong>25%</strong>
+      <small>BONIFICACIÓN</small>
+    </div>
+    <button class="caldero" type="button" aria-label="Caldero 2">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
+
+  <div class="casilla casilla3" data-premio="1000 FICHAS">
+    <div class="recompensa">
+      <strong>1000</strong>
+      <small>FICHAS</small>
+    </div>
+    <button class="caldero" type="button" aria-label="Caldero 3">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
+
+  <!-- FILA 2 -->
+
+  <div class="casilla casilla4" data-premio="1000 FICHAS">
+    <div class="recompensa">
+      <strong>1000</strong>
+      <small>FICHAS</small>
+    </div>
+    <button class="caldero" type="button" aria-label="Caldero 4">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
+
+  <div class="casilla casilla5" data-premio="10%">
+    <div class="recompensa">
+      <strong>10%</strong>
+      <small>BONIFICACIÓN</small>
+    </div>
+    <button class="caldero" type="button" aria-label="Caldero 5">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
+
+  <div class="casilla casilla6" data-premio="25%">
+    <div class="recompensa">
+      <strong>25%</strong>
+      <small>BONIFICACIÓN</small>
+    </div>
+    <button class="caldero" type="button" aria-label="Caldero 6">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
+
+  <!-- FILA 3 -->
+
+  <div class="casilla casilla7" data-premio="25%">
+    <div class="recompensa">
+      <strong>25%</strong>
+      <small>BONIFICACIÓN</small>
+    </div>
+    <button class="caldero" type="button" aria-label="Caldero 7">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
+
+  <div class="casilla casilla8" data-premio="1000 FICHAS">
+    <div class="recompensa">
+      <strong>1000</strong>
+      <small>FICHAS</small>
+    </div>
+    <button class="caldero" type="button" aria-label="Caldero 8">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
+
+  <div class="casilla casilla9" data-premio="10%">
+    <div class="recompensa">
+      <strong>10%</strong>
+      <small>BONIFICACIÓN</small>
+    </div>
+    <button class="caldero" type="button" aria-label="Caldero 9">
+      <img src="Caldero.png" alt="">
+      <span class="chispa">✨</span>
+    </button>
+  </div>
+
+</section>
+
+<!-- PIE -->
+<footer class="pie-juego">
+  <button id="abrir-reglas" class="boton-reglas" type="button">
+    📜 ¿CÓMO JUGAR?
+  </button>
+  <p>🐱 COMUNIDAD MISTY 💜</p>
+</footer>
+
+<!-- INSTRUCCIONES -->
+<section class="pantalla-reglas" id="pantalla-reglas">
+  <div class="cartel-reglas">
+    <h2>🎃 ¿CÓMO JUGAR?</h2>
+    <p>¡Misty te invita a probar tu suerte!</p>
+
+    <ol>
+      <li>Tocá un caldero para descubrir su premio.</li>
+      <li>Seguí abriendo calderos mágicos.</li>
+      <li>Buscá tres premios iguales.</li>
+      <li>¡Todos tienen una recompensa asegurada!</li>
+      <li>Guardá una captura del resultado final.</li>
+    </ol>
+
+    <p class="nota">
+      Premios sujetos a validación por Comunidad Misty.
     </p>
 
-    <!-- FILA 1 -->
-    <div class="casilla casilla1">
-      <div class="recompensa">
-        <strong>10%</strong>
-        <small>BONIFICACIÓN</small>
-      </div>
-      <label for="c1" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 1">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
+    <button id="cerrar-reglas" class="cerrar-reglas" type="button">
+      ¡ENTENDIDO! 💜
+    </button>
+  </div>
+</section>
 
-    <div class="casilla casilla2">
-      <div class="recompensa">
-        <strong>25%</strong>
-        <small>BONIFICACIÓN</small>
-      </div>
-      <label for="c2" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 2">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
-
-    <div class="casilla casilla3">
-      <div class="recompensa">
-        <strong>1000</strong>
-        <small>FICHAS</small>
-      </div>
-      <label for="c3" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 3">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
-
-    <!-- FILA 2 -->
-    <div class="casilla casilla4">
-      <div class="recompensa">
-        <strong>1000</strong>
-        <small>FICHAS</small>
-      </div>
-      <label for="c4" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 4">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
-
-    <div class="casilla casilla5">
-      <div class="recompensa">
-        <strong>10%</strong>
-        <small>BONIFICACIÓN</small>
-      </div>
-      <label for="c5" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 5">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
-
-    <div class="casilla casilla6">
-      <div class="recompensa">
-        <strong>25%</strong>
-        <small>BONIFICACIÓN</small>
-      </div>
-      <label for="c6" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 6">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
-
-    <!-- FILA 3 -->
-    <div class="casilla casilla7">
-      <div class="recompensa">
-        <strong>25%</strong>
-        <small>BONIFICACIÓN</small>
-      </div>
-      <label for="c7" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 7">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
-
-    <div class="casilla casilla8">
-      <div class="recompensa">
-        <strong>1000</strong>
-        <small>FICHAS</small>
-      </div>
-      <label for="c8" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 8">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
-
-    <div class="casilla casilla9">
-      <div class="recompensa">
-        <strong>10%</strong>
-        <small>BONIFICACIÓN</small>
-      </div>
-      <label for="c9" class="caldero">
-        <img src="Caldero.png" alt="Abrir caldero 9">
-        <span class="chispa">✨</span>
-      </label>
-    </div>
-
-  </section>
-
-  <!-- BOTÓN DE INSTRUCCIONES -->
-  <footer class="pie-juego">
-    <label for="reglas" class="boton-reglas">
-      📜 ¿CÓMO JUGAR?
-    </label>
-    <p>🐱 COMUNIDAD MISTY 💜</p>
-  </footer>
-
-  <!-- VENTANA DE INSTRUCCIONES -->
-  <section class="pantalla-reglas">
-    <div class="cartel-reglas">
-
-      <h2>🎃 ¿CÓMO JUGAR?</h2>
-      <p>¡Misty te invita a probar tu suerte!</p>
-
-      <ol>
-        <li>Tocá un caldero para descubrir su premio.</li>
-        <li>Seguí abriendo calderos mágicos.</li>
-        <li>Buscá tres premios iguales.</li>
-        <li>¡Todos tienen una recompensa asegurada!</li>
-        <li>Guardá una captura del resultado final.</li>
-      </ol>
-
-      <p class="nota">
-        Premios sujetos a validación
-        por Comunidad Misty.
-      </p>
-
-      <label for="reglas" class="cerrar-reglas">
-        ¡ENTENDIDO! 💜
-      </label>
-
-    </div>
-  </section>
-
- 
-<!-- PANTALLA DE VICTORIA -->
-<section class="pantalla-ganadora" id="ganadora">
-
+<!-- PANTALLA GANADORA -->
+<section class="pantalla-ganadora" id="pantalla-ganadora">
   <div class="cartel-ganador">
 
-    <img
-      src="MistyPremio.png"
-      alt="Misty festeja tu premio"
-    >
+    <img src="MistyPremio(5).png"
+      alt="Misty festeja tu premio">
 
-    <!-- RESULTADO SEGÚN LOS TRES IGUALES -->
-    <div class="premio-final">
-      <span class="ganancia10">10%</span>
-      <span class="ganancia25">25%</span>
-      <span class="ganancia1000">1000 FICHAS</span>
+    <div class="premio-final" id="premio-final"></div>
+
+    <button id="guardar-premio" class="zona-guardar"
+      type="button" aria-label="Entendido y guardar"></button>
+
+  </div>
+</section>
+
+<!-- YA PARTICIPASTE -->
+<section class="pantalla-intento" id="intento-utilizado">
+
+  <div class="resultado-contenido">
+
+    <div class="cartel-reclamar">
+
+      <img src="Reclamar.png"
+        class="imagen-reclamar"
+        alt="Ya participaste. Reclamá tu premio">
+
+      <!-- PREMIO CENTRADO -->
+      <div class="premio-reclamar">
+        <span id="premio-anterior"></span>
+      </div>
+
+      <!-- BOTON WHATSAPP ORIGINAL -->
+      <a id="enlace-reclamar"
+        class="enlace-reclamar"
+        href="https://wa.me/5491162431492"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Reclamar premio por WhatsApp"></a>
+
     </div>
 
-    <!-- BOTÓN VERDE DE LA IMAGEN -->
-    <label
-      for="cerrar-victoria"
-      class="zona-guardar"
-      aria-label="Entendido y guardar"
-    ></label>
+    <!-- RECORDATORIO -->
+    <p class="aviso-captura">
+      📸 Sacá captura de tu premio y enviala por WhatsApp
+    </p>
 
   </div>
 
 </section>
-
-
-<!-- WHATSAPP DE COMUNIDAD MISTY -->
-<div class="seccion-whatsapp">
-
-  <p>💜 ¿Ya descubriste tu premio?</p>
-  <p>¡ENVIANOS TU CAPTURA!</p>
-
-  <a
-    href="https://wa.link/v2txxr"
-    class="boton-whatsapp"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Ir al WhatsApp de Comunidad Misty"
-  >
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      <path fill="currentColor" d="M16 .8A15.1 15.1 0 0 0 3 23.6L.9 31l7.6-2A15.2 15.2 0 1 0 16 .8Zm0 27.5a12.2 12.2 0 0 1-6.2-1.7l-.5-.3-4.5 1.2L6 23.1l-.3-.5A12.3 12.3 0 1 1 16 28.3Zm6.8-9.2c-.4-.2-2.2-1.1-2.6-1.2-.3-.1-.6-.2-.8.2-.3.4-1 1.2-1.2 1.4-.2.2-.4.3-.8.1a10 10 0 0 1-3-1.8 11 11 0 0 1-2.1-2.6c-.2-.4 0-.6.2-.8l.6-.7.4-.6c.1-.2.1-.5 0-.7l-1.2-2.9c-.3-.7-.6-.6-.8-.6h-.7c-.3 0-.7.1-1 .5-.4.4-1.3 1.3-1.3 3.2s1.4 3.8 1.6 4c.2.3 2.7 4.1 6.5 5.7.9.4 1.6.6 2.2.7.9.3 1.7.2 2.3.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.7.2-1.8-.1-.2-.4-.3-.8-.5Z"/>
-    </svg>
-  </a>
-
-  <span class="texto-whatsapp">ESCRIBINOS POR WHATSAPP</span>
-
-</div>
-
-
-<!-- PANTALLA DE PREMIO ANTERIOR -->
-<section id="intento-utilizado" class="pantalla-intento">
-
-  <div class="cartel-reclamar">
-
-    <!-- IMAGEN DE MISTY -->
-    <img
-      src="Reclamar.png"
-      alt="Ya participaste. Tu premio fue de:"
-      class="imagen-reclamar"
-    >
-
-    <!-- PREMIO SOBRE EL ESPACIO BLANCO -->
-    <div class="premio-reclamar">
-      <span id="premio-anterior">---</span>
-      <small id="tipo-premio"></small>
-    </div>
-
-    <!-- ZONA CLICABLE SOBRE EL BOTÓN VERDE -->
-    <a
-      href="https://wa.link/v2txxr"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="enlace-reclamar"
-      aria-label="Reclamar mi premio por WhatsApp"
-    ></a>
-
-  </div>
-
-</section>
-
 
 </main>
 
-
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-  const CLAVE_INTENTO =
-    "comunidadMistyHalloween2026_intento";
+  // CONSERVAR ESTA CLAVE PARA NO REINICIAR PREMIOS
+  const CLAVE = "comunidadMistyHalloween2026_v2";
 
-  const CLAVE_PREMIO =
-    "comunidadMistyHalloween2026_premio";
+  const musica = document.getElementById("musica-halloween");
+  const botonSonido = document.getElementById("boton-sonido");
+  const iconoSonido = document.getElementById("icono-sonido");
 
-  const pantalla =
-    document.getElementById("intento-utilizado");
+  const bienvenida = document.getElementById("bienvenida");
+  const pantallaGanadora = document.getElementById("pantalla-ganadora");
+  const pantallaAnterior = document.getElementById("intento-utilizado");
 
-  const premioAnterior =
-    document.getElementById("premio-anterior");
-
-  const tipoPremio =
-    document.getElementById("tipo-premio");
+  const premioFinal = document.getElementById("premio-final");
+  const premioAnterior = document.getElementById("premio-anterior");
 
   const calderos = Array.from(
-    document.querySelectorAll(
-      "#c1, #c2, #c3, #c4, #c5, #c6, #c7, #c8, #c9"
-    )
+    document.querySelectorAll(".casilla")
   );
 
-  const grupos = [
-    {
-      premio: "10%",
-      ids: ["c1", "c5", "c9"]
-    },
-    {
-      premio: "25%",
-      ids: ["c2", "c6", "c7"]
-    },
-    {
-      premio: "1000 FICHAS",
-      ids: ["c3", "c4", "c8"]
+  let terminado = false;
+  let abiertos = [];
+  let premioGanado = "";
+
+  // CONTROL DE MUSICA
+  function actualizarIcono() {
+    const sonando = !musica.paused;
+
+    iconoSonido.textContent = sonando ? "🔊" : "🔇";
+
+    botonSonido.setAttribute(
+      "aria-label",
+      sonando ? "Pausar música" : "Reproducir música"
+    );
+  }
+
+  function reproducirMusica() {
+    musica.play().catch(actualizarIcono);
+  }
+
+  botonSonido.addEventListener("click", function () {
+    if (musica.paused) {
+      reproducirMusica();
+    } else {
+      musica.pause();
     }
-  ];
+  });
 
-  let partidaTerminada = false;
+  musica.addEventListener("play", actualizarIcono);
+  musica.addEventListener("pause", actualizarIcono);
 
-  // Mostrar el premio anterior
-  function mostrarPremioAnterior() {
+  // WHATSAPP PERSONALIZADO
+  function crearEnlaceWhatsApp(premio) {
 
-    const premio =
-      localStorage.getItem(CLAVE_PREMIO);
+    let mensaje = "";
 
-    pantalla.classList.add("visible");
+    if (premio === "10%") {
+      mensaje =
+        "¡Hola Comunidad Misty! 💜🎃 " +
+        "Jugué a la Raspadita Halloween y gané " +
+        "un 10% de bonificación para mi próxima carga. " +
+        "Quiero reclamar mi premio. Adjunto la captura.";
+    }
 
-    calderos.forEach(caldero => {
-      caldero.disabled = true;
+    else if (premio === "25%") {
+      mensaje =
+        "¡Hola Comunidad Misty! 💜🎃 " +
+        "Jugué a la Raspadita Halloween y gané " +
+        "un 25% de bonificación para mi próxima carga. " +
+        "Quiero reclamar mi premio. Adjunto la captura.";
+    }
+
+    else {
+      mensaje =
+        "¡Hola Comunidad Misty! 💜🎃 " +
+        "Jugué a la Raspadita Halloween y gané " +
+        "1000 fichas. Quiero reclamar mi recompensa. " +
+        "Adjunto la captura.";
+    }
+
+    return "https://wa.me/5491162431492?text=" +
+      encodeURIComponent(mensaje);
+  }
+
+  function actualizarWhatsApp(premio) {
+    document.getElementById("enlace-reclamar").href =
+      crearEnlaceWhatsApp(premio);
+  }
+
+  // MOSTRAR RESULTADO
+  function mostrarPremioGuardado(premio) {
+
+    bienvenida.classList.add("oculta");
+    pantallaGanadora.classList.remove("visible");
+
+    // UNA SOLA LINEA DENTRO DEL RECUADRO
+    premioAnterior.textContent = premio;
+
+    if (premio === "1000 FICHAS") {
+      premioAnterior.classList.add("premio-fichas");
+    } else {
+      premioAnterior.classList.remove("premio-fichas");
+    }
+
+    actualizarWhatsApp(premio);
+    pantallaAnterior.classList.add("visible");
+  }
+
+  // RECUPERAR PARTIDA
+  let guardado = null;
+
+  try {
+    guardado = JSON.parse(localStorage.getItem(CLAVE));
+  } catch (e) {
+    guardado = null;
+  }
+
+  function guardarEstado() {
+    try {
+      localStorage.setItem(CLAVE, JSON.stringify({
+        abiertos: abiertos,
+        premio: premioGanado
+      }));
+    } catch (e) {
+      // Almacenamiento no disponible
+    }
+  }
+
+  if (guardado && guardado.premio) {
+
+    terminado = true;
+    premioGanado = guardado.premio;
+
+    mostrarPremioGuardado(premioGanado);
+
+  } else if (guardado && Array.isArray(guardado.abiertos)) {
+
+    abiertos = [...new Set(
+      guardado.abiertos.filter(function (n) {
+        return Number.isInteger(n) && n >= 0 && n < 9;
+      })
+    )];
+
+    abiertos.forEach(function (n) {
+      calderos[n].classList.add("abierta");
     });
 
-    if (premio) {
-
-      premioAnterior.textContent = premio;
-
-      tipoPremio.textContent =
-        premio === "1000 FICHAS"
-          ? "FICHAS GANADAS"
-          : "DE BONIFICACIÓN";
-
-    } else {
-
-      premioAnterior.textContent =
-        "SIN RESULTADO";
-
-      tipoPremio.textContent =
-        "PARTIDA NO FINALIZADA";
-    }
   }
 
-  // Si ya jugó, bloquear desde el inicio
-  if (
-    localStorage.getItem(CLAVE_INTENTO) === "usado"
-  ) {
-    mostrarPremioAnterior();
-    return;
-  }
+  // INICIAR
+  document.getElementById("iniciar")
+    .addEventListener("click", function () {
 
-  // Escuchar los calderos
-  calderos.forEach(caldero => {
+      if (terminado) return;
 
-    caldero.addEventListener("change", () => {
+      bienvenida.classList.add("oculta");
+      reproducirMusica();
 
-      if (partidaTerminada) return;
+    });
 
-      if (!caldero.checked) return;
+  // REGLAS
+  document.getElementById("abrir-reglas")
+    .addEventListener("click", function () {
+      document.getElementById("pantalla-reglas")
+        .classList.add("visible");
+    });
 
-  
+  document.getElementById("cerrar-reglas")
+    .addEventListener("click", function () {
+      document.getElementById("pantalla-reglas")
+        .classList.remove("visible");
+    });
 
-      // Obtener calderos abiertos
-      const abiertos = new Set(
-        calderos
-          .filter(c => c.checked)
-          .map(c => c.id)
-      );
+  // CALDEROS
+  calderos.forEach(function (casilla, indice) {
 
-      // Buscar el primer grupo completo
-      const ganador = grupos.find(grupo =>
-        grupo.ids.every(id => abiertos.has(id))
-      );
+    const boton = casilla.querySelector(".caldero");
+
+    boton.addEventListener("click", function () {
+
+      if (terminado || abiertos.includes(indice)) return;
+
+      abiertos.push(indice);
+      casilla.classList.add("abierta");
+
+      guardarEstado();
+
+      const conteo = {
+        "10%": 0,
+        "25%": 0,
+        "1000 FICHAS": 0
+      };
+
+      abiertos.forEach(function (n) {
+        const premio = calderos[n].dataset.premio;
+        conteo[premio]++;
+      });
+
+      const ganador = Object.keys(conteo).find(function (premio) {
+        return conteo[premio] === 3;
+      });
 
       if (ganador) {
 
-        partidaTerminada = true;
+        terminado = true;
+        premioGanado = ganador;
 
-localStorage.setItem(CLAVE_INTENTO, "usado");
+        guardarEstado();
 
-        // Guardar premio definitivamente
-        localStorage.setItem(
-          CLAVE_PREMIO,
-          ganador.premio
-        );
+        // ESPERA DE 2 SEGUNDOS
+        setTimeout(function () {
 
-        // Bloquear calderos restantes
-        calderos.forEach(c => {
-          c.disabled = true;
-        });
+          premioFinal.textContent = ganador;
+          actualizarWhatsApp(ganador);
 
-        console.log(
-          "Premio de Comunidad Misty:",
-          ganador.premio
-        );
+          pantallaGanadora.classList.add("visible");
+
+        }, 2000);
+
       }
 
     });
 
   });
 
+  // GUARDAR PREMIO
+  document.getElementById("guardar-premio")
+    .addEventListener("click", function () {
+
+      if (!premioGanado) return;
+
+      mostrarPremioGuardado(premioGanado);
+
+    });
+
+  actualizarIcono();
+
 });
 </script>
-
 
 </body>
 </html>
