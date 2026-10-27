@@ -1,0 +1,756 @@
+
+/* COMUNIDAD MISTY - RASPADITA HALLOWEEN */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #17051f;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  font-family: inherit;
+}
+
+.juego {
+  position: relative;
+  width: min(100%,650px);
+  margin: auto;
+}
+
+/* BIENVENIDA */
+
+.bienvenida {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  background: #180522;
+  transition: opacity .7s,visibility .7s;
+}
+
+.bienvenida.oculta {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.bienvenida-fondo {
+  position: relative;
+  width: min(100vw,650px);
+  aspect-ratio: 1051 / 1496;
+  flex-shrink: 0;
+  background: url("Inicio.png") center / 100% 100% no-repeat;
+}
+
+.frase-nueva {
+  position: absolute;
+  left: 17%;
+  top: 65%;
+  width: 66%;
+  min-height: 9%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ff8fe9;
+  border-radius: 18px;
+  background: linear-gradient(145deg,#310a42,#5b115e);
+  color: #ffd6f6;
+  text-align: center;
+  font-size: clamp(11px,2.7vw,18px);
+  line-height: 1.4;
+  text-shadow: 0 0 8px #f93dcf;
+  box-shadow: 0 0 15px #ff28c4;
+}
+
+.frase-nueva strong {
+  color: #ffe88e;
+}
+
+.zona-iniciar {
+  position: absolute;
+  left: 20%;
+  top: 76%;
+  width: 60%;
+  height: 11%;
+  z-index: 3;
+  border: 0;
+  border-radius: 45px;
+  background: transparent;
+  cursor: pointer;
+  animation: pulsoInicio 2s infinite;
+}
+
+@keyframes pulsoInicio {
+  0%,100% { box-shadow: 0 0 0 transparent; }
+  50% { box-shadow: 0 0 22px #ff41d9; }
+}
+
+/* ESCENA */
+
+.escena {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1051 / 1496;
+  background: url("RaspaditaM.png") center / 100% 100% no-repeat;
+  overflow: hidden;
+}
+
+.titulo {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  width: 93%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.titulo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: brilloTitulo 3s infinite;
+}
+
+@keyframes brilloTitulo {
+  0%,100% {
+    filter: drop-shadow(0 0 6px #ff3acb);
+  }
+  50% {
+    filter: drop-shadow(0 0 16px #ff84eb);
+  }
+}
+
+.instruccion-principal {
+  position: absolute;
+  top: 95.5%;
+  left: 50%;
+  width: 84%;
+  margin: 0;
+  padding: 5px;
+  transform: translateX(-50%);
+  z-index: 5;
+  border-radius: 20px;
+  background: rgba(35,4,46,.8);
+  text-align: center;
+  color: #ffe68b;
+  font-size: clamp(11px,2.8vw,18px);
+  font-weight: 900;
+  text-shadow: 0 0 8px #ff4edb;
+  pointer-events: none;
+}
+
+/* POSICIONES DE CALDEROS */
+
+.casilla {
+  position: absolute;
+  width: 29%;
+  height: 16.5%;
+  z-index: 10;
+}
+
+.casilla1 { left: 5.2%; top: 43.5%; }
+.casilla2 { left: 35.5%; top: 43.5%; }
+.casilla3 { left: 65.8%; top: 43.5%; }
+
+.casilla4 { left: 5.2%; top: 58.8%; }
+.casilla5 { left: 35.5%; top: 58.8%; }
+.casilla6 { left: 65.8%; top: 58.8%; }
+
+.casilla7 { left: 5.2%; top: 74.1%; }
+.casilla8 { left: 35.5%; top: 74.1%; }
+.casilla9 { left: 65.8%; top: 74.1%; }
+
+/* CALDEROS */
+
+.caldero {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.caldero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 0 7px #ff29cd);
+}
+
+.caldero:hover img {
+  filter: drop-shadow(0 0 15px #ffb4ed);
+}
+
+.chispa {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  opacity: 0;
+  font-size: clamp(22px,6vw,40px);
+  transform: translate(-50%,-50%) scale(.3);
+  pointer-events: none;
+}
+
+/* PREMIOS DE LOS CALDEROS */
+
+.recompensa {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 52%;
+  width: 92%;
+  height: 67%;
+  padding: 5px 2px;
+  transform: translate(-50%,-50%) scale(.65);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.recompensa strong {
+  color: #ffe37b;
+  font-size: clamp(22px,6vw,43px);
+  line-height: 1.1;
+  font-weight: 1000;
+  text-shadow: 2px 3px 4px #000,0 0 12px #ff9900;
+}
+
+.recompensa small {
+  color: white;
+  font-size: clamp(9px,2.2vw,15px);
+  font-weight: 900;
+  text-shadow: 2px 3px 4px #000,0 0 8px #ff65d8;
+}
+
+/* ANIMACIONES */
+
+.casilla.abierta .caldero {
+  animation: desaparecer .75s forwards;
+  pointer-events: none;
+}
+
+.casilla.abierta .recompensa {
+  animation: mostrarPremio .65s .45s both;
+}
+
+.casilla.abierta .chispa {
+  animation: explosionMagica .65s forwards;
+}
+
+@keyframes desaparecer {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.08) rotate(-5deg);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(.1) rotate(25deg);
+  }
+}
+
+@keyframes mostrarPremio {
+  0% {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(.3);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1);
+  }
+}
+
+@keyframes explosionMagica {
+  0% {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(.2);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(3);
+  }
+}
+
+/* PIE DEL JUEGO */
+
+.pie-juego {
+  padding: 19px 15px 25px;
+  background: linear-gradient(#3a0b4a,#17051f);
+  text-align: center;
+  border-top: 2px solid #e948d4;
+}
+
+.boton-reglas {
+  display: inline-block;
+  padding: 14px 27px;
+  border: 2px solid #ffd77a;
+  border-radius: 40px;
+  background: linear-gradient(135deg,#ff5bdf,#9811af);
+  box-shadow: 0 0 15px #ff38cf;
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.pie-juego p {
+  margin: 20px 0 0;
+  color: #f8c2ed;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+/* INSTRUCCIONES */
+
+.pantalla-reglas {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: rgba(12,0,19,.9);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s,visibility .3s;
+}
+
+.pantalla-reglas.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.cartel-reglas {
+  width: min(100%,430px);
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: 25px 22px;
+  border: 2px solid #ff87e9;
+  border-radius: 25px;
+  background: linear-gradient(145deg,#6b237e,#22082f);
+  box-shadow: 0 0 30px #f43cda;
+  text-align: center;
+}
+
+.cartel-reglas h2 {
+  margin: 0 0 15px;
+  color: #ffe27c;
+}
+
+.cartel-reglas p {
+  line-height: 1.5;
+}
+
+.cartel-reglas ol {
+  padding-left: 23px;
+  margin: 20px 0;
+  text-align: left;
+  line-height: 1.8;
+}
+
+.cartel-reglas li {
+  margin-bottom: 7px;
+}
+
+.nota {
+  color: #ffd28a;
+  font-size: 12px;
+}
+
+.cerrar-reglas {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  border: 0;
+  border-radius: 30px;
+  background: linear-gradient(135deg,#ff61df,#9d18bb);
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* PANTALLA GANASTE */
+
+.pantalla-ganadora {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(12,0,20,.94);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pantalla-ganadora.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.cartel-ganador {
+  position: relative;
+  width: min(96vw,470px,calc(85dvh * 1278 / 1230));
+  aspect-ratio: 1278 / 1230;
+}
+
+.pantalla-ganadora.visible .cartel-ganador {
+  animation: entradaVictoria .7s ease-out both;
+}
+
+.cartel-ganador img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@keyframes entradaVictoria {
+  0% {
+    opacity: 0;
+    transform: scale(.6) translateY(40px);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.06) translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.premio-final {
+  position: absolute;
+  top: 64%;
+  left: 14%;
+  width: 72%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #a00089;
+  font-size: clamp(23px,6vw,40px);
+  font-weight: 1000;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0 2px 4px #ffd2fa,0 0 10px #ffb8e9;
+  pointer-events: none;
+}
+
+.zona-guardar {
+  position: absolute;
+  top: 81%;
+  left: 11%;
+  width: 78%;
+  height: 13%;
+  border: 0;
+  border-radius: 40px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ===================================
+   PANTALLA YA PARTICIPASTE
+   DISTRIBUCION CORREGIDA
+=================================== */
+
+.pantalla-intento {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(15,0,25,.96);
+  overflow-y: auto;
+}
+
+.pantalla-intento.visible {
+  display: flex;
+}
+
+/* CENTRAR TODO EL CONJUNTO */
+
+.resultado-contenido {
+  width: min(94vw,450px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: auto;
+  padding: 0;
+}
+
+/* IMAGEN ORIGINAL COMPLETA */
+
+.cartel-reclamar {
+  position: relative;
+  width: min(100%,450px,calc(77dvh * 1240 / 1190));
+  aspect-ratio: 1240 / 1190;
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+.imagen-reclamar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* PREMIO DENTRO DEL RECUADRO BLANCO */
+
+.premio-reclamar {
+  position: absolute;
+
+  /* CENTRADO HORIZONTAL */
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* ALTURA DEL RECUADRO */
+  top: 64.5%;
+
+  width: 65%;
+  height: 8%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+
+  text-align: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* TEXTO DEL PREMIO */
+
+#premio-anterior {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  color: #b00093;
+  font-size: clamp(22px,5.8vw,35px);
+  font-weight: 1000;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+
+  text-shadow:
+    0 1px 2px white,
+    0 0 5px #ff9de8;
+}
+
+/* PREMIO DE FICHAS: TEXTO MAS COMPACTO */
+
+#premio-anterior.premio-fichas {
+  font-size: clamp(18px,4.7vw,29px);
+  letter-spacing: -0.5px;
+}
+
+/* BOTON WHATSAPP ORIGINAL DE LA IMAGEN */
+
+.enlace-reclamar {
+  position: absolute;
+
+  left: 15%;
+  top: 79.5%;
+
+  width: 70%;
+  height: 11%;
+
+  display: block;
+  border-radius: 40px;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.enlace-reclamar:focus-visible {
+  outline: 3px solid white;
+}
+
+/* TEXTO DE CAPTURA DEBAJO DEL CARTEL */
+
+.aviso-captura {
+  width: 100%;
+  max-width: 420px;
+  margin: -2% auto 0;
+  padding: 0 10px 10px;
+
+  color: #ffe58a;
+  text-align: center;
+  font-size: clamp(12px,2.7vw,15px);
+  font-weight: 900;
+  line-height: 1.5;
+
+  text-shadow:
+    0 0 7px #ff39d1,
+    0 2px 3px #000;
+}
+
+/* BOTON DE MUSICA */
+
+.boton-sonido {
+  position: fixed;
+  top: max(12px,env(safe-area-inset-top));
+  right: max(12px,env(safe-area-inset-right));
+  z-index: 500;
+
+  width: 49px;
+  height: 49px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  background: linear-gradient(145deg,#79218f,#320740);
+  border: 2px solid #ff8be9;
+  border-radius: 50%;
+
+  color: white;
+  font-size: 23px;
+  cursor: pointer;
+
+  box-shadow:
+    0 0 12px #ff39d1,
+    inset 0 0 9px #ff8be955;
+
+  transition: transform .2s,box-shadow .2s;
+}
+
+.boton-sonido:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 22px #ff39d1;
+}
+
+.boton-sonido:active {
+  transform: scale(.94);
+}
+
+/* CELULARES */
+
+@media (max-width:450px) {
+
+  .boton-sonido {
+    top: max(8px,env(safe-area-inset-top));
+    right: max(8px,env(safe-area-inset-right));
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .recompensa strong {
+    font-size: 5.7vw;
+  }
+
+  .recompensa small {
+    font-size: 2.1vw;
+  }
+
+  .frase-nueva {
+    border-radius: 12px;
+  }
+
+  .resultado-contenido {
+    width: 96%;
+  }
+
+  .cartel-reclamar {
+    width: min(100%,calc(75dvh * 1240 / 1190));
+  }
+
+  #premio-anterior {
+    font-size: clamp(21px,6.5vw,30px);
+  }
+
+  #premio-anterior.premio-fichas {
+    font-size: clamp(17px,5vw,25px);
+  }
+
+  .aviso-captura {
+    font-size: 12px;
+    padding: 0 8px 8px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+
+  .titulo img,
+  .zona-iniciar,
+  .pantalla-ganadora.visible .cartel-ganador {
+    animation: none;
+  }
+
+  .caldero,
+  .recompensa,
+  .chispa {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+  }
+}
